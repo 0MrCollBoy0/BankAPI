@@ -13,7 +13,7 @@ public interface IUserService
     /// </summary>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список всех объектов Пользователь</returns>
-    Task<IEnumerable<UserDto>> GetAllAsync(CancellationToken cancellationToken);
+    Task<List<UserDto>> GetAllAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Получение пользователя по идентификатору

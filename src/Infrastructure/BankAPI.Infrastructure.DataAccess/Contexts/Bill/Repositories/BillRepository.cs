@@ -32,9 +32,10 @@ public class BillRepository : IBillRepository
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
     }
 
-    public Task CreateAsync(Domain.Bill.Bill bill, CancellationToken cancellationToken)
+    public async Task CreateAsync(Domain.Bill.Bill bill, CancellationToken cancellationToken)
     {
-        return _repository.AddAsync(bill, cancellationToken);
+        await _repository.AddAsync(bill, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -42,5 +43,6 @@ public class BillRepository : IBillRepository
         var bill = await _repository.Query()
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
         await _repository.DeleteAsync(bill, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
     }
 }

@@ -15,7 +15,7 @@ public class BillService : IBillService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<BillDto>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<List<BillDto>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await _repository.GetAllAsync(cancellationToken);
     }

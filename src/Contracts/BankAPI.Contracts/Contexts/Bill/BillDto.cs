@@ -13,11 +13,6 @@ public class BillDto
     public Guid Id { get; set; }
 
     /// <summary>
-    /// Пользователь
-    /// </summary>
-    public UserDto User { get; set; }
-    
-    /// <summary>
     /// Баланс
     /// </summary>
     public decimal Balance { get; set; }

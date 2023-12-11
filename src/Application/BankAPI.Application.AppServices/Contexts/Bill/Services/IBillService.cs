@@ -10,9 +10,9 @@ public interface IBillService
     /// <summary>
     /// Поиск всех Счетов
     /// </summary>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список всех Транзакций</returns>
-    Task<IEnumerable<BillDto>> GetAllAsync(CancellationToken cancellationToken);
+    Task<List<BillDto>> GetAllAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Поиск Счетов по заданному ключу

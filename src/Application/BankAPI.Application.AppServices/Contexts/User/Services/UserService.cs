@@ -15,14 +15,14 @@ public class UserService : IUserService
         _repository = repository;
         _mapper = mapper;
     }
-    public async Task<IEnumerable<UserDto>> GetAllAsync(CancellationToken cancellationToken)
+    public Task<List<UserDto>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(cancellationToken);
+        return  _repository.GetAllAsync(cancellationToken);
     }
 
-    public async Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _repository.GetByIdAsync(id, cancellationToken);
+        return  _repository.GetByIdAsync(id, cancellationToken);
     }
 
     public Task CreateAsync(CreateUserDto user, CancellationToken cancellationToken)

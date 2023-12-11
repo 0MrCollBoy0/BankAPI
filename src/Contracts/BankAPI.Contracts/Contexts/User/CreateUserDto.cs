@@ -30,13 +30,4 @@ public class CreateUserDto
     /// </summary>
     public string Password { get; set; }
     
-    /// <summary>
-    /// Дата создания
-    /// </summary>
-    public DateTime CreatedAt { get; set; }
-    
-    /// <summary>
-    /// Дата последней авторизации
-    /// </summary>
-    public DateTime SignedAt { get; set; }
 }

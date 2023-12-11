@@ -36,9 +36,4 @@ public class UpdateUserDto
     /// </summary>
     public string Password { get; set; }
 
-
-    /// <summary>
-    /// Счета
-    /// </summary>
-    public IEnumerable<BillDto> Bills { get; set; }
 }

@@ -32,9 +32,10 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
 
-    public Task CreateAsync(User user, CancellationToken cancellationToken)
+    public async Task CreateAsync(User user, CancellationToken cancellationToken)
     {
-        return _repository.AddAsync(user, cancellationToken);
+        await _repository.AddAsync(user, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
     }
 
     public async Task UpdateAsync(UpdateUserDto user, CancellationToken cancellationToken)
@@ -43,6 +44,7 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(u => u.Id == user.Id, cancellationToken);
         _mapper.Map(user, result);
         await _repository.UpdateAsync(result, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -50,5 +52,6 @@ public class UserRepository : IUserRepository
         var user = await _repository.Query()
             .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
         await _repository.DeleteAsync(user, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
     }
 }

@@ -10,7 +10,7 @@ public interface IBillRepository
     /// <summary>
     /// Поиск всех Счетов
     /// </summary>
-    /// <param name="cancellationToken"></param>
+    /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список всех Транзакций</returns>
     Task<List<BillDto>> GetAllAsync(CancellationToken cancellationToken);
 
