@@ -25,10 +25,15 @@ public class UserRepository : IUserRepository
             .ToListAsync(cancellationToken);
     }
 
-    public Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public Task<UserDto> GetDtoByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return _repository.Query()
             .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
+    }
+    public Task<User> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _repository.Query()
             .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
 

@@ -10,11 +10,13 @@ namespace BankAPI.Infrastructure.DataAccess.Contexts.Bill.Repositories;
 public class BillRepository : IBillRepository
 {
     private readonly IRepository<Domain.Bill.Bill> _repository;
+    private readonly IRepository<Domain.Transaction.Transaction> _repositoryTransaction;
     private readonly IMapper _mapper;
 
-    public BillRepository(IRepository<Domain.Bill.Bill> repository, IMapper mapper)
+    public BillRepository(IRepository<Domain.Bill.Bill> repository, IMapper mapper, IRepository<Domain.Transaction.Transaction> repositoryTransaction)
     {
         _repository = repository;
+        _repositoryTransaction = repositoryTransaction;
         _mapper = mapper;
     }
 
@@ -25,11 +27,16 @@ public class BillRepository : IBillRepository
             .ToListAsync(cancellationToken);
     }
 
-    public Task<BillDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public Task<BillDto> GetDtoByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return _repository.Query()
             .ProjectTo<BillDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
+    }
+
+    public Task<Domain.Bill.Bill> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _repository.Query().FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
     }
 
     public async Task CreateAsync(Domain.Bill.Bill bill, CancellationToken cancellationToken)
@@ -44,5 +51,11 @@ public class BillRepository : IBillRepository
             .FirstOrDefaultAsync(b => b.Id == id, cancellationToken);
         await _repository.DeleteAsync(bill, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task CreateTransactionAsync(Domain.Transaction.Transaction transaction, CancellationToken cancellationToken)
+    {
+        await _repositoryTransaction.AddAsync(transaction, cancellationToken);
+        await _repositoryTransaction.SaveChangesAsync(cancellationToken);
     }
 }

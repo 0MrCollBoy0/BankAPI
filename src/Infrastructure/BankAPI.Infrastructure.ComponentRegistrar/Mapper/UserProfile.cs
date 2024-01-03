@@ -12,5 +12,6 @@ public class UserProfile : Profile
             .ForMember(d => d.Email, map => map.MapFrom(s => s.Email));
 
         CreateMap<CreateUserDto, User>();
+        CreateMap<UpdateUserDto, User>();
     }
 }

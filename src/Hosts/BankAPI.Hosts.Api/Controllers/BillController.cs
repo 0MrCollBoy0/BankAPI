@@ -1,5 +1,6 @@
 ﻿using BankAPI.Application.AppServices.Contexts.Bill.Services;
 using BankAPI.Contracts.Contexts.Bill;
+using BankAPI.Contracts.Contexts.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAPI.Hosts.Api.Controllers;
@@ -64,5 +65,20 @@ public class BillController : ControllerBase
     {
         await _billService.DeleteAsync(id, cancellationToken);
         return Ok();
+    }
+
+    /// <summary>
+    /// Создание Транзакции
+    /// </summary>
+    /// <param name="transaction">Модель создания транзакции</param>
+    /// <param name="idSender">Идентификатор отправителя</param>
+    /// <param name="idReceiver">Идентификатор получателя</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    [HttpPost("{idReceiver:guid}")]
+    public async Task<IActionResult> CreateTransactionAsync(CreateTransactionDto transaction, Guid idSender,
+        Guid idReceiver, CancellationToken cancellationToken)
+    {
+        await _billService.CreateTransactionAsync(transaction, idSender, idReceiver, cancellationToken);
+        return Created(nameof(CreateTransactionAsync), null);
     }
 }

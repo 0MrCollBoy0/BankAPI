@@ -19,9 +19,17 @@ public interface IBillRepository
     /// </summary>
     /// <param name="id">Идентификатор</param>
     /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Объект <see cref="BillDto"/></returns>
+    Task<BillDto> GetDtoByIdAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Поиск Счетов по заданному идентификатор
+    /// </summary>
+    /// <param name="id">Идентификатор</param>
+    /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Объект <see cref="Domain.Bill.Bill"/></returns>
-    Task<BillDto> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-    
+    Task<Domain.Bill.Bill> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
     /// <summary>
     /// Создание <see cref="Domain.Bill.Bill"/>
     /// </summary>
@@ -35,4 +43,11 @@ public interface IBillRepository
     /// <param name="id">Идентификатор</param>
     /// <param name="cancellationToken">Токен отмены</param>
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    ///  Создание <see cref="Domain.Transaction.Transaction"/>
+    /// </summary>
+    /// <param name="transaction">Модель Транзакция</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    Task CreateTransactionAsync(Domain.Transaction.Transaction transaction, CancellationToken cancellationToken);
 }

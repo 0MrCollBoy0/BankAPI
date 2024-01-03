@@ -1,4 +1,5 @@
 ﻿using BankAPI.Contracts.Contexts.Bill;
+using BankAPI.Contracts.Contexts.Transaction;
 
 namespace BankAPI.Application.AppServices.Contexts.Bill.Services;
 
@@ -35,4 +36,14 @@ public interface IBillService
     /// <param name="id">Идентификатор</param>
     /// <param name="cancellationToken">Токен отмены</param>
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Создание <see cref="Domain.Transaction.Transaction"/>
+    /// </summary>
+    /// <param name="transaction">Модель создания Транзакции</param>
+    /// <param name="idSender">Идентификатор отправителя</param>
+    /// <param name="idReceiver">Идентификатор получателя</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    Task CreateTransactionAsync(CreateTransactionDto transaction, Guid idSender, Guid idReceiver,
+        CancellationToken cancellationToken);
 }

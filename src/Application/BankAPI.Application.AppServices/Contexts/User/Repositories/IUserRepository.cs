@@ -21,7 +21,15 @@ public interface IUserRepository
     /// <returns>Модель <see cref="Domain.User.User"/></returns>
     /// <param name="id">Идентификатор</param>
     /// <param name="cancellationToken">Токен отмены</param>
-    Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<UserDto> GetDtoByIdAsync(Guid id, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Получение <see cref="Domain.User.User"/> по идентификатор
+    /// </summary>
+    /// <returns>Модель <see cref="Domain.User.User"/></returns>
+    /// <param name="id">Идентификатор</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    Task<Domain.User.User> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
     /// Создание модели <see cref="Domain.User.User"/>

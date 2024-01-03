@@ -22,7 +22,7 @@ public class UserService : IUserService
 
     public Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return  _repository.GetByIdAsync(id, cancellationToken);
+        return  _repository.GetDtoByIdAsync(id, cancellationToken);
     }
 
     public Task CreateAsync(CreateUserDto user, CancellationToken cancellationToken)

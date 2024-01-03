@@ -13,7 +13,7 @@ public class Transaction
     /// <summary>
     /// Отправитель
     /// </summary>
-    public Bill.Bill Sender { get; set; }
+    public User.User Sender { get; set; }
     
     /// <summary>
     /// Идентификатор получателя
@@ -23,7 +23,7 @@ public class Transaction
     /// <summary>
     /// Получатель
     /// </summary>
-    public Bill.Bill Receiver { get; set; }
+    public User.User Receiver { get; set; }
     
     /// <summary>
     /// Дата совершения транзакции
