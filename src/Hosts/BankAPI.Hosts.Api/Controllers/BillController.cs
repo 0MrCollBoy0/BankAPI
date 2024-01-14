@@ -1,6 +1,6 @@
-﻿using BankAPI.Application.AppServices.Contexts.Bill.Services;
+﻿using System.Security.Claims;
+using BankAPI.Application.AppServices.Contexts.Bill.Services;
 using BankAPI.Contracts.Contexts.Bill;
-using BankAPI.Contracts.Contexts.Transaction;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankAPI.Hosts.Api.Controllers;
@@ -13,11 +13,11 @@ namespace BankAPI.Hosts.Api.Controllers;
 [Produces("application/json")]
 public class BillController : ControllerBase
 {
-    private readonly IBillService _billService;
+    private readonly IBillService _service;
 
-    public BillController(IBillService billService)
+    public BillController(IBillService service)
     {
-        _billService = billService;
+        _service = service;
     }
 
     /// <summary>
@@ -26,9 +26,10 @@ public class BillController : ControllerBase
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список Счетов</returns>
     [HttpGet]
-    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllByUserAsync(CancellationToken cancellationToken)
     {
-        return Ok(await _billService.GetAllAsync(cancellationToken));
+        var userGuid = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value);
+        return Ok(await _service.GetAllByUserAsync(userGuid, cancellationToken));
     }
     
     /// <summary>
@@ -40,7 +41,7 @@ public class BillController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return Ok(await _billService.GetByIdAsync(id, cancellationToken));
+        return Ok(await _service.GetByIdAsync(id, cancellationToken));
     }
 
     /// <summary>
@@ -51,7 +52,7 @@ public class BillController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateBillDto bill, CancellationToken cancellationToken)
     {
-        await _billService.CreateAsync(bill, cancellationToken);
+        await _service.CreateAsync(bill, cancellationToken);
         return Created(nameof(CreateAsync), null);
     }
 
@@ -63,22 +64,7 @@ public class BillController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await _billService.DeleteAsync(id, cancellationToken);
+        await _service.DeleteAsync(id, cancellationToken);
         return Ok();
-    }
-
-    /// <summary>
-    /// Создание Транзакции
-    /// </summary>
-    /// <param name="transaction">Модель создания транзакции</param>
-    /// <param name="idSender">Идентификатор отправителя</param>
-    /// <param name="idReceiver">Идентификатор получателя</param>
-    /// <param name="cancellationToken">Токен отмены</param>
-    [HttpPost("{idReceiver:guid}")]
-    public async Task<IActionResult> CreateTransactionAsync(CreateTransactionDto transaction, Guid idSender,
-        Guid idReceiver, CancellationToken cancellationToken)
-    {
-        await _billService.CreateTransactionAsync(transaction, idSender, idReceiver, cancellationToken);
-        return Created(nameof(CreateTransactionAsync), null);
     }
 }

@@ -1,9 +1,12 @@
-﻿using BankAPI.Contracts.Contexts.Bill;
+﻿namespace BankAPI.Contracts.Contexts.Transaction;
 
-namespace BankAPI.Contracts.Contexts.Transaction;
-
+/// <summary>
+/// Модель создания Транзакции
+/// </summary>
 public class CreateTransactionDto
 {
+    public Guid SenderId { get; set; }
+    
     /// <summary>
     /// Получатель
     /// </summary>

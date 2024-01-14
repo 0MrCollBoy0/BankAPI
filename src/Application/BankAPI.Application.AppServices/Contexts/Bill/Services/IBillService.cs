@@ -11,9 +11,10 @@ public interface IBillService
     /// <summary>
     /// Поиск всех Счетов
     /// </summary>
+    /// <param name="userId"></param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список всех Транзакций</returns>
-    Task<List<BillDto>> GetAllAsync(CancellationToken cancellationToken);
+    Task<List<BillDto>> GetAllByUserAsync(Guid userId, CancellationToken cancellationToken);
 
     /// <summary>
     /// Поиск Счетов по заданному ключу
@@ -36,14 +37,4 @@ public interface IBillService
     /// <param name="id">Идентификатор</param>
     /// <param name="cancellationToken">Токен отмены</param>
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Создание <see cref="Domain.Transaction.Transaction"/>
-    /// </summary>
-    /// <param name="transaction">Модель создания Транзакции</param>
-    /// <param name="idSender">Идентификатор отправителя</param>
-    /// <param name="idReceiver">Идентификатор получателя</param>
-    /// <param name="cancellationToken">Токен отмены</param>
-    Task CreateTransactionAsync(CreateTransactionDto transaction, Guid idSender, Guid idReceiver,
-        CancellationToken cancellationToken);
 }

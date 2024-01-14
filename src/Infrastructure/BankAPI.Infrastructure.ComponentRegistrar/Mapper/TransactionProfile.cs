@@ -9,7 +9,10 @@ public class TransactionProfile : Profile
     public TransactionProfile()
     {
         CreateMap<Transaction, TransactionDto>();
-        CreateMap<CreateTransactionDto, Transaction>();
+        CreateMap<CreateTransactionDto, Transaction>()
+            .ForMember(t => t.CreatedAt,
+                map =>
+                    map.MapFrom(src => DateTime.UtcNow));
     }
     
 }

@@ -1,5 +1,6 @@
 ﻿
 using BankAPI.Contracts.Contexts.Transaction;
+using BankAPI.Contracts.Contexts.User;
 
 namespace BankAPI.Contracts.Contexts.Bill;
 
@@ -12,6 +13,11 @@ public class BillDto
     /// Идентификатор
     /// </summary>
     public Guid Id { get; set; }
+    
+    /// <summary>
+    /// Пользователь
+    /// </summary>
+    public ShortUserDto User { get; set; }
 
     /// <summary>
     /// Баланс
@@ -21,5 +27,6 @@ public class BillDto
     /// <summary>
     /// Транзакции
     /// </summary>
-    public IEnumerable<TransactionDto> Transactions { get; set; }
+    public List<TransactionDto> Transactions { get; set; }
+    
 }

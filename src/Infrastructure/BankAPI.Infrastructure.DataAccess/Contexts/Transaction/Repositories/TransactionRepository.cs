@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BankAPI.Application.AppServices.Contexts.Transaction;
 using BankAPI.Application.AppServices.Contexts.Transaction.Repositories;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankAPI.Infrastructure.DataAccess.Contexts.Transaction.Repositories;
 
+/// <inheritdoc/>
 public class TransactionRepository : ITransactionRepository
 {
     private readonly IRepository<Domain.Transaction.Transaction> _repository;
@@ -19,14 +21,18 @@ public class TransactionRepository : ITransactionRepository
         _mapper = mapper;
     }
 
-    public Task<List<TransactionDto>> GetAllAsync(CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public Task<List<TransactionDto>> GetAllAsync(Expression<Func<Domain.Transaction.Transaction, bool>> filter,
+        CancellationToken cancellationToken)
     {
         return _repository.Query()
+            .Where(filter)
             .ProjectTo<TransactionDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
 
-    public Task<TransactionDto> GetByHasKeyAsync(Guid receiverId, Guid senderId, DateTime createdAt,
+    /// <inheritdoc/>
+    public Task<TransactionDto> GetByHashKeyAsync(Guid receiverId, Guid senderId, DateTime createdAt,
         CancellationToken cancellationToken)
     {
         return _repository.Query()
@@ -36,5 +42,12 @@ public class TransactionRepository : ITransactionRepository
             .ProjectTo<TransactionDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
 
+    }
+
+    /// <inheritdoc/>
+    public async Task CreateAsync(Domain.Transaction.Transaction transaction, CancellationToken cancellationToken)
+    {
+        await _repository.AddAsync(transaction, cancellationToken);
+        await _repository.SaveChangesAsync(cancellationToken);
     }
 }

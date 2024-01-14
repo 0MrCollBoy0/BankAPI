@@ -2,14 +2,18 @@
 
 namespace BankAPI.Application.AppServices.Contexts.Transaction.Services;
 
+/// <summary>
+/// Сервис для работы с Транзакциями
+/// </summary>
 public interface ITransactionService
 {
     /// <summary>
     /// Поиск всех Транзакций
     /// </summary>
+    /// <param name="senderId"></param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список Транзакций</returns>
-    Task<List<TransactionDto>> GetAllAsync(CancellationToken cancellationToken);
+    Task<List<TransactionDto>> GetAllByBillAsync(Guid senderId, CancellationToken cancellationToken);
     
     /// <summary>
     /// Поиск Транзакции по хэш-идентификатору
@@ -21,5 +25,12 @@ public interface ITransactionService
     /// <returns>Объект <see cref="Domain.Transaction.Transaction"/></returns>
     Task<TransactionDto> GetByHasKeyAsync(Guid receiverId, Guid senderId, DateTime createdAt,
         CancellationToken cancellationToken);
-    
+
+    /// <summary>
+    /// Создание транзакции
+    /// </summary>
+    /// <param name="transaction">Модель создание Транзакции</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    Task CreateAsync(CreateTransactionDto transaction, CancellationToken cancellationToken);
+
 }

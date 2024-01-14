@@ -23,12 +23,13 @@ public class TransactionController:ControllerBase
     /// <summary>
     /// Получение всех объектов <see cref="Transaction"/>
     /// </summary>
+    /// <param name="senderId">Идентификатор Счета отправителя</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список всех Транзакций</returns>
-    [HttpGet]
-    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+    [HttpGet("{senderId:Guid}")]
+    public async Task<IActionResult> GetAllAsync(Guid senderId, CancellationToken cancellationToken)
     {
-        return Ok(await _service.GetAllAsync(cancellationToken));
+        return Ok(await _service.GetAllByBillAsync(senderId, cancellationToken));
     }
 
     /// <summary>
@@ -45,5 +46,16 @@ public class TransactionController:ControllerBase
     {
         return Ok(await _service.GetByHasKeyAsync(receiverId, senderId, createdAt, cancellationToken));
     }
-    
+
+    /// <summary>
+    /// Со
+    /// </summary>
+    /// <param name="transaction"></param>
+    /// <param name="cancellationToken"></param>
+    [HttpPost("/Bill/{billId:Guid}/send/{receiverBillId:Guid}")]
+    public async Task<IActionResult> Send(CreateTransactionDto transaction, CancellationToken cancellationToken)
+    {
+        await _service.CreateAsync(transaction, cancellationToken);
+        return Created(nameof(Send), null);
+    }
 }

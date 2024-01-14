@@ -1,10 +1,8 @@
-﻿using BankAPI.Contracts.Contexts.Bill;
-
-namespace BankAPI.Contracts.Contexts.User;
+﻿namespace BankAPI.Contracts.Contexts.User;
 /// <summary>
-/// Модель Пользователь
+/// Сокращённая модель пользователя
 /// </summary>
-public class UserDto
+public class ShortUserDto
 {
     /// <summary>
     /// Идентификатор
@@ -25,15 +23,5 @@ public class UserDto
     /// Номер телефона
     /// </summary>
     public string Phone { get; set; }
-    
-    /// <summary>
-    /// Дата рождения
-    /// </summary>
-    public DateTime Birthday { get; set; }
-    
 
-    /// <summary>
-    /// Счета
-    /// </summary>
-    public List<BillDto> Bills { get; set; }
 }

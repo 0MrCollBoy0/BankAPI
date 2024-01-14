@@ -1,4 +1,5 @@
-﻿using BankAPI.Contracts.Contexts.Bill;
+﻿using System.Linq.Expressions;
+using BankAPI.Contracts.Contexts.Bill;
 
 namespace BankAPI.Application.AppServices.Contexts.Bill.Repositories;
 
@@ -10,9 +11,11 @@ public interface IBillRepository
     /// <summary>
     /// Поиск всех Счетов
     /// </summary>
+    /// <param name="filter">Условие фильтрации</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список всех Транзакций</returns>
-    Task<List<BillDto>> GetAllAsync(CancellationToken cancellationToken);
+    Task<List<BillDto>> GetAllAsync(Expression<Func<Domain.Bill.Bill, bool>> filter,
+        CancellationToken cancellationToken);
 
     /// <summary>
     /// Поиск Счетов по заданному ключу
@@ -43,11 +46,4 @@ public interface IBillRepository
     /// <param name="id">Идентификатор</param>
     /// <param name="cancellationToken">Токен отмены</param>
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
-
-    /// <summary>
-    ///  Создание <see cref="Domain.Transaction.Transaction"/>
-    /// </summary>
-    /// <param name="transaction">Модель Транзакция</param>
-    /// <param name="cancellationToken">Токен отмены</param>
-    Task CreateTransactionAsync(Domain.Transaction.Transaction transaction, CancellationToken cancellationToken);
 }
