@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankAPI.Infrastructure.DataAccess.Contexts.Users.Repositories;
 
+/// <inheritdoc/>
 public class UserRepository : IUserRepository
 {
     private readonly IRepository<User> _repository;
@@ -18,6 +19,8 @@ public class UserRepository : IUserRepository
         _repository = repository;
         _mapper = mapper;
     }
+    
+    /// <inheritdoc/>
     public Task<List<UserDto>> GetAllAsync(CancellationToken cancellationToken)
     {
         return _repository.Query()
@@ -25,19 +28,29 @@ public class UserRepository : IUserRepository
             .ToListAsync(cancellationToken);
     }
 
-    public Task<UserDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public Task<UserDto> GetDtoByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return _repository.Query()
             .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
+    
+    /// <inheritdoc/>
+    public Task<User> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _repository.Query()
+            .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
+    }
 
+    /// <inheritdoc/>
     public async Task CreateAsync(User user, CancellationToken cancellationToken)
     {
         await _repository.AddAsync(user, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task UpdateAsync(UpdateUserDto user, CancellationToken cancellationToken)
     {
         var result = await  _repository.Query()
@@ -47,6 +60,7 @@ public class UserRepository : IUserRepository
         await _repository.SaveChangesAsync(cancellationToken);
     }
 
+    /// <inheritdoc/>
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var user = await _repository.Query()

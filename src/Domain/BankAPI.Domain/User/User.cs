@@ -48,5 +48,5 @@ public class User
     /// <summary>
     /// Счета
     /// </summary>
-    public IEnumerable<Bill.Bill> Bills { get; set; }
+    public List<Bill.Bill> Bills { get; set; }
 }

@@ -9,6 +9,6 @@ public class CreateBillDto
     /// <summary>
     /// Пользователь
     /// </summary>
-    public UserDto User { get; set; }
+    public Guid UserId { get; set; }
 
 }

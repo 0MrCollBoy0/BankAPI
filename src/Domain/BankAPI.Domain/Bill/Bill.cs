@@ -1,7 +1,7 @@
 ﻿namespace BankAPI.Domain.Bill;
 
 /// <summary>
-/// Счёт
+/// Счет
 /// </summary>
 public class Bill
 {
@@ -38,5 +38,5 @@ public class Bill
     /// <summary>
     /// Транзакции
     /// </summary>
-    public IEnumerable<Transaction.Transaction> Transactions { get; set; }
+    public List<Transaction.Transaction> Transactions { get; set; }
 }

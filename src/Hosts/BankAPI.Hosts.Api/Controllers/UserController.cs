@@ -61,7 +61,7 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="user">Модель для обновления пользователя</param>
     /// <param name="cancellationToken">Токен отмены</param>
-    [HttpPut("{id:guid}")]
+    [HttpPut]
     public async Task<IActionResult> UpdateAsync(UpdateUserDto user, CancellationToken cancellationToken)
     {
         await _userService.UpdateAsync(user, cancellationToken);

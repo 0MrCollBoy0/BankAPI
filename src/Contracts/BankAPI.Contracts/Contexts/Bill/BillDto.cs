@@ -1,4 +1,6 @@
-﻿using BankAPI.Contracts.Contexts.User;
+﻿
+using BankAPI.Contracts.Contexts.Transaction;
+using BankAPI.Contracts.Contexts.User;
 
 namespace BankAPI.Contracts.Contexts.Bill;
 
@@ -11,16 +13,20 @@ public class BillDto
     /// Идентификатор
     /// </summary>
     public Guid Id { get; set; }
+    
+    /// <summary>
+    /// Пользователь
+    /// </summary>
+    public ShortUserDto User { get; set; }
 
     /// <summary>
     /// Баланс
     /// </summary>
     public decimal Balance { get; set; }
+
+    /// <summary>
+    /// Транзакции
+    /// </summary>
+    public List<TransactionDto> Transactions { get; set; }
     
-    
-    // TODO Добавить контракт Transaction
-    // /// <summary>
-    // /// Транзакции
-    // /// </summary>
-    // public IEnumerable<Transaction.Transaction> Transactions { get; set; }
 }

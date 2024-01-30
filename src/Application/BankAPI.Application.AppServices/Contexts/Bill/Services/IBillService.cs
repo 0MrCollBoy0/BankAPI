@@ -1,4 +1,5 @@
 ﻿using BankAPI.Contracts.Contexts.Bill;
+using BankAPI.Contracts.Contexts.Transaction;
 
 namespace BankAPI.Application.AppServices.Contexts.Bill.Services;
 
@@ -10,9 +11,10 @@ public interface IBillService
     /// <summary>
     /// Поиск всех Счетов
     /// </summary>
+    /// <param name="userId"></param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список всех Транзакций</returns>
-    Task<List<BillDto>> GetAllAsync(CancellationToken cancellationToken);
+    Task<List<BillDto>> GetAllByUserAsync(Guid userId, CancellationToken cancellationToken);
 
     /// <summary>
     /// Поиск Счетов по заданному ключу
